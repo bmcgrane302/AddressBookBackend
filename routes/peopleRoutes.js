@@ -9,4 +9,32 @@ router.get('/', function(req, res, next) {
    .then(people => res.json(people))
 });
 
+router.get('/:id', function(req, res) {
+  knex('people')
+   .select()
+   .where('id', req.params.id)
+   .then(person => res.json(person))
+});
+
+router.post('/', function(req, res) {
+  knex('people')
+  .insert(req.body)
+  .then(() => {
+    knex('people')
+    .select()
+    .then(people => res.json(people))
+  });
+});
+
+router.patch('/:id', function(req, res) {
+  knex('people')
+  .update(req.body)
+  .where('id', req.params.id)
+  .then(() => {
+    knex('people')
+    .select()
+    .then(people => res.json(people))
+  });
+});
+
 module.exports = router;
