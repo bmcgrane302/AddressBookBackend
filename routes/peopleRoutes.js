@@ -37,4 +37,15 @@ router.patch('/:id', function(req, res) {
   });
 });
 
+router.delete('/:id', function(req, res) {
+  knex('people')
+  .del()
+  .where('id', req.params.id)
+  .then(() => {
+    knex('people')
+    .select()
+    .then(people => res.json(people))
+  });
+});
+
 module.exports = router;
